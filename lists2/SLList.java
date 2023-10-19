@@ -1,74 +1,88 @@
-package lists2;
+//package lists2;
 
 /** An SLList is a list of integers, which hides the terrible truth
    * of the nakedness within. */
-public class SLList {	
-	private static class IntNode {
+public class SLList {
+	// static nested class: can not access any of the members of
+	// the enclosing class; can create static nested class without
+	// having an instance of the enclosing class
+	public static class IntNode {
 		public int item;
 		public IntNode next;
 
-		public IntNode(int i, IntNode n) {
+		public IntNode(int i, IntNode n){
 			item = i;
 			next = n;
-			// System.out.println(size);
 		}
-	} 
-
-	/* The first item (if it exists) is at sentinel.next. */
-	private IntNode sentinel;
+	}
+//	public IntNode first;
+	// accessible to code in current java file only
+	private IntNode first;
 	private int size;
-
-	private static void lectureQuestion() {
-		SLList L = new SLList();
-		IntNode n = new IntNode(5, null);
-	}
-
-	/** Creates an empty SLList. */
-	public SLList() {
-		sentinel = new IntNode(63, null);
-		size = 0;
-	}
-
-	public SLList(int x) {
-		sentinel = new IntNode(63, null);
-		sentinel.next = new IntNode(x, null);
+	public SLList(int x){
+		first = new IntNode(x, null);
 		size = 1;
 	}
 
- 	/** Adds x to the front of the list. */
- 	public void addFirst(int x) {
- 		sentinel.next = new IntNode(x, sentinel.next);
- 		size = size + 1;
- 	}
+	public SLList(){
+		first = null;
+		size = 0;
+	}
 
- 	/** Returns the first item in the list. */
- 	public int getFirst() {
- 		return sentinel.next.item;
- 	}
+	// simple helper functions
+	public void addFirst(int x){
+		first = new IntNode(x, first);
+		size += 1;
+	}
+	public int getFirst(){
+		return first.item;
+	}
 
- 	/** Adds x to the end of the list. */
- 	public void addLast(int x) {
- 		size = size + 1; 		
+	public void addLast(int x){
+		// size of list may be longer than 1
+		// first.next = new IntNode(x, null); Incorrect
+		size += 1;
 
- 		IntNode p = sentinel;
+		if (first == null){
+			first = new IntNode(x, null);
+			return;
+		}
+		IntNode p = first;
 
- 		/* Advance p to the end of the list. */
- 		while (p.next != null) {
- 			p = p.next;
- 		}
-
- 		p.next = new IntNode(x, null);
- 	}
- 	
- 	/** Returns the size of the list. */
- 	public int size() {
- 		return size;
- 	}
-
-	public static void main(String[] args) {
- 		/* Creates a list of one integer, namely 10 */
- 		SLList L = new SLList();
- 		L.addLast(20);
- 		System.out.println(L.size());
- 	}
+		while (p.next != null){
+			p = p.next;
+		}
+		p.next = new IntNode(x, null);
+	}
+	// overloaded
+	// updated size when create and add elements to list
+//	private static int size(IntNode p){
+//		if (p.next == null){
+//			return 1;
+//		}
+//		return 1 + size(p.next);
+//	}
+//
+	public int size(){
+//		return size(first);
+		return size;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
